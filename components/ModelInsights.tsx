@@ -18,7 +18,7 @@ const ModelInsights: React.FC = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl">
+        <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl z-50">
           <p className="text-slate-200 text-sm font-bold mb-1">{label}</p>
           <p className="text-blue-400 text-xs">
             {payload[0].name}: {payload[0].value}
@@ -46,7 +46,8 @@ const ModelInsights: React.FC = () => {
                <p className="text-xs text-slate-400">Balance between Fake and Real samples</p>
             </div>
           </div>
-          <div className="h-64 flex-1">
+          {/* Explicit height wrapper for Recharts */}
+          <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -87,7 +88,7 @@ const ModelInsights: React.FC = () => {
                <p className="text-xs text-slate-400">Frequency of article lengths</p>
             </div>
           </div>
-          <div className="h-64 flex-1">
+          <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={TEXT_LENGTH_DISTRIBUTION} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
@@ -118,7 +119,7 @@ const ModelInsights: React.FC = () => {
                <p className="text-xs text-slate-400">Evaluation Scores</p>
             </div>
           </div>
-          <div className="h-64 flex-1">
+          <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="70%" data={MODEL_PERFORMANCE}>
                 <PolarGrid stroke="#334155" />
@@ -149,30 +150,35 @@ const ModelInsights: React.FC = () => {
                <p className="text-xs text-slate-400">Top keywords driving the classification decision</p>
             </div>
           </div>
-          <div className="h-64 grid grid-cols-2 gap-8">
+          
+          <div className="h-[300px] w-full grid grid-cols-2 gap-8">
             {/* Fake Words */}
-            <div className="relative">
+            <div className="relative h-full w-full flex flex-col">
               <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-2 text-center">Predictive of FAKE</h4>
-              <ResponsiveContainer width="100%" height="90%">
-                <BarChart layout="vertical" data={TOP_FAKE_WORDS}>
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="feature" type="category" stroke="#94a3b8" width={70} tick={{fontSize: 11}} tickLine={false} axisLine={false} />
-                  <RechartsTooltip cursor={{ fill: '#334155', opacity: 0.2 }} contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155' }} />
-                  <Bar dataKey="importance" fill="#ef4444" radius={[0, 4, 4, 0]} barSize={16} background={{ fill: '#1e293b' }} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="flex-1 min-h-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart layout="vertical" data={TOP_FAKE_WORDS}>
+                    <XAxis type="number" hide />
+                    <YAxis dataKey="feature" type="category" stroke="#94a3b8" width={80} tick={{fontSize: 11}} tickLine={false} axisLine={false} />
+                    <RechartsTooltip cursor={{ fill: '#334155', opacity: 0.2 }} contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155' }} />
+                    <Bar dataKey="importance" fill="#ef4444" radius={[0, 4, 4, 0]} barSize={16} background={{ fill: '#1e293b' }} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
              {/* Real Words */}
-             <div className="relative">
+             <div className="relative h-full w-full flex flex-col">
               <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2 text-center">Predictive of REAL</h4>
-              <ResponsiveContainer width="100%" height="90%">
-                <BarChart layout="vertical" data={TOP_REAL_WORDS}>
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="feature" type="category" stroke="#94a3b8" width={70} tick={{fontSize: 11}} orientation="right" tickLine={false} axisLine={false} />
-                  <RechartsTooltip cursor={{ fill: '#334155', opacity: 0.2 }} contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155' }} />
-                  <Bar dataKey="importance" fill="#10b981" radius={[4, 0, 0, 4]} barSize={16} background={{ fill: '#1e293b' }} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="flex-1 min-h-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart layout="vertical" data={TOP_REAL_WORDS}>
+                    <XAxis type="number" hide />
+                    <YAxis dataKey="feature" type="category" stroke="#94a3b8" width={80} tick={{fontSize: 11}} orientation="right" tickLine={false} axisLine={false} />
+                    <RechartsTooltip cursor={{ fill: '#334155', opacity: 0.2 }} contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155' }} />
+                    <Bar dataKey="importance" fill="#10b981" radius={[4, 0, 0, 4]} barSize={16} background={{ fill: '#1e293b' }} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>

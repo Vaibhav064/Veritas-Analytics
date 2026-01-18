@@ -18,11 +18,13 @@ export interface DistributionData {
   name: string;
   value: number;
   color?: string;
+  [key: string]: any;
 }
 
 export interface FeatureImportanceData {
   feature: string;
   importance: number;
+  [key: string]: any;
 }
 
 export interface ConfusionMatrixData {
