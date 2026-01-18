@@ -1,0 +1,5 @@
+{
+  "name": "Veritas Analytics - Fake News Detector",
+  "description": "A comprehensive React application demonstrating Fake News Detection. It features a live analysis engine using NLP heuristics to classify and explain news articles, alongside a dashboard visualizing dataset EDA and model performance metrics typical of a data science pipeline.",
+  "requestFramePermissions": []
+}
